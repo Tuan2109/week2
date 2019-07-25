@@ -17,7 +17,7 @@ export default function App() {
               require('./assets/ava.jpg')
             }
             style={styles.avata}
-            resizeMode="contain"
+            resizeMode="cover"
           />
         </View>
         <View style={styles.headerText}>
@@ -36,10 +36,17 @@ export default function App() {
               <Button
                 title="Follow"
                 color="white"
+                onPress={() => { alertMessage('follow') }}
               />
             </View>
             <View style={styles.buttonSend}>
-              <MaterialIcons name="send" size={22} color="white" style={styles.shadowColor} />
+              <MaterialIcons
+                name="send"
+                size={22}
+                color="white"
+                style={styles.shadowColor}
+                onPress={() => { alertMessage('send') }}
+              />
             </View>
           </View>
         </View>
@@ -76,14 +83,14 @@ export default function App() {
             <View style={styles.listLeft}>
               {
                 imgData.map((item) => (
-                  renderImageLeft(item)
+                  renderImage(item, 'left')
                 ))
               }
             </View>
             <View style={styles.listRight}>
               {
                 imgData.map((item) => (
-                  renderImageRight(item)
+                  renderImage(item, 'right')
                 ))
               }
             </View>
@@ -97,36 +104,45 @@ export default function App() {
   );
 }
 
-function renderImageLeft(item) {
-  if (item.id % 2 != 0) {
-    return <Image
-      source={
-        item.imgSource
-      }
-      style={styles.imageLeft}
-      resizeMode="contain"
-    />
+function alertMessage(message) {
+  if (message == 'follow')
+    return alert('followed');
+  if (message == 'send')
+    return alert('message sended');
+}
+
+function renderImage(item, opt) {
+  if (opt == "left" && item.id % 2 != 0) {
+    return <View>
+      <Image
+        source={
+          item.imgSource
+        }
+        style={[styles.imageScroll]}
+        resizeMode="cover"
+      />
+    </View>
+  }
+  if (opt == "right" && item.id % 2 == 0) {
+    return <View>
+      <Image
+        source={
+          item.imgSource
+        }
+        style={styles.imageScroll}
+        resizeMode="cover"
+      />
+    </View>
   }
 };
 
-function renderImageRight(item) {
-  if (item.id % 2 == 0)
-    return <Image
-      source={
-        item.imgSource
-      }
-      style={styles.imageRight}
-      resizeMode="contain"
-    />
-};
-
 const imgData = [
-  { id: 1, imgSource: require('./assets/1.jpg') },
-  { id: 2, imgSource: require('./assets/2.jpg') },
-  { id: 3, imgSource: require('./assets/3.jpg') },
+  { id: 1, imgSource: require('./assets/a.jpg') },
+  { id: 2, imgSource: require('./assets/b.jpg') },
+  { id: 3, imgSource: require('./assets/c.jpg') },
   { id: 4, imgSource: require('./assets/4.jpeg') },
   { id: 5, imgSource: require('./assets/5.jpeg') },
-  { id: 6, imgSource: require('./assets/6.jpeg') }
+  { id: 6, imgSource: require('./assets/6.jpeg') },
 ];
 
 const styles = StyleSheet.create({
@@ -135,28 +151,24 @@ const styles = StyleSheet.create({
   },
   //layout
   dropLayout: {
-    flex: 0.025,
+    flex: 0.030,
   },
   navigation: {
-    flex: 0.075,
+    flex: 0.070,
   },
   header: {
     flex: 0.2,
     flexDirection: 'row',
-    backgroundColor: 'red',
     marginHorizontal: 12,
-    marginVertical: 10,
   },
   totalArea: {
     flex: 0.1,
-    backgroundColor: 'blue',
     flexDirection: 'row',
     marginHorizontal: 12,
     marginVertical: 10,
   },
   imageArea: {
     flex: 0.525,
-    backgroundColor: 'green',
     marginHorizontal: 12,
     flexDirection: 'row',
   },
@@ -183,10 +195,10 @@ const styles = StyleSheet.create({
     flex: 0.40,
   },
   headerTitle: {
-    flex: 0.35,
+    flex: 0.30,
   },
   headerButton: {
-    flex: 0.25,
+    flex: 0.30,
     flexDirection: 'row',
   },
   textName: {
@@ -196,7 +208,6 @@ const styles = StyleSheet.create({
   textTitle: {
     color: 'grey',
     fontSize: 20,
-    marginHorizontal: 5,
   },
   buttonFollow: {
     flex: 0.6,
@@ -209,7 +220,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgb(120,213,250)',
     alignItems: 'center',
     borderRadius: 20,
-    paddingTop: 3,
+    paddingTop: 5,
     paddingLeft: 5,
   },
   shadowColor: {
@@ -250,23 +261,19 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   containerScroll: {
-    flex: 1,
     flexDirection: 'row',
   },
   listLeft: {
     flex: 0.5,
-    backgroundColor: 'blue',
   },
   listRight: {
     flex: 0.5,
-    backgroundColor: 'red',
   },
-  imageLeft: {
-    width: 100,
-    height: 100,
-  },
-  imageRight: {
-    height: 100,
-    width: 100,
+  imageScroll: {
+    width: null,
+    height: 150,
+    marginHorizontal: 10,
+    marginVertical: 10,
+    borderRadius: 20,
   },
 });
