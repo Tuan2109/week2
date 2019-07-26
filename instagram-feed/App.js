@@ -43,7 +43,7 @@ export default function App() {
               />
             </View>
             <View style={styles.buttonSend}>
-              <TouchableOpacity style={styles.FacebookStyle} activeOpacity={0.5}>
+              <TouchableOpacity>
                 <MaterialIcons
                   name="send"
                   size={22}
